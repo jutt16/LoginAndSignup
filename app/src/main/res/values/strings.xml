@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">LoginAndSignup</string>
+    <string name="login_screen">Login Screen</string>
+    <string name="login">Login</string>
+    <string name="please_fill_in_the_information_below">Please fill in the information below</string>
+    <string name="not_registered_yet">Not Registered yet?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="register_screen">Register Screen</string>
+    <string name="register">Register</string>
+    <string name="clear_form">Clear Form</string>
+</resources>
