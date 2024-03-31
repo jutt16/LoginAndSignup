@@ -59,7 +59,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:layout_marginTop="16dp"
-                android:drawableEnd="@drawable/baseline_visibility_24"
+                android:drawableEnd="@drawable/baseline_visibility_off_24"
                 android:drawablePadding="8dp" />
 
             <androidx.appcompat.widget.AppCompatButton

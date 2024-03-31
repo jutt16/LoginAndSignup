@@ -104,6 +104,9 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             // Get user input
             String fullName = full_name.getText().toString();
+            String username = user_name.getText().toString();
+            String pass = password.getText().toString();
+            String rePass = re_password.getText().toString();
 
             // Get the ID of the selected radio button
             int selectedId = gender.getCheckedRadioButtonId();
@@ -111,77 +114,42 @@ public class RegisterActivity extends AppCompatActivity {
             // Find the selected radio button
             RadioButton selectedRadioButton = findViewById(selectedId);
 
-            String gender=null;
+            String gender = null;
             // Check if a radio button is selected
             if (selectedRadioButton != null) {
                 // Get the text of the selected radio button
                 gender = selectedRadioButton.getText().toString();
-
-                // Now you have the value of the selected radio button (gender)
-                // You can use it as needed
-                Toast.makeText(RegisterActivity.this, "Selected gender: " + gender, Toast.LENGTH_SHORT).show();
             } else {
-                // Inflate custom layout
-                LayoutInflater inflater = getLayoutInflater();
-                View layout = inflater.inflate(R.layout.custom_toast_layout,
-                        findViewById(R.id.custom_toast_layout_root));
-
-                AndroidToast.showToast(getApplicationContext(),"Please select a gender",layout);
+                throw new IllegalArgumentException("Please fill all fields");
             }
 
-            int yearOfBirth=0;
-            yearOfBirth = Integer.parseInt(yearSpinner.getSelectedItem().toString());
-            String username = user_name.getText().toString();
-            String pass = password.getText().toString();
+            int yearOfBirth = Integer.parseInt(yearSpinner.getSelectedItem().toString());
+
+            // Validation
+            if (fullName.isEmpty() || gender.isEmpty() || yearOfBirth == 0 || username.isEmpty() || pass.isEmpty() || rePass.isEmpty()) {
+                throw new IllegalArgumentException("Please fill all fields");
+            }
+
+            if (!pass.equals(rePass)) {
+                throw new IllegalArgumentException("Password and re-entered password should be the same!");
+            }
 
             // Create new user object
-            User user;
-            long result=-1;
-            //Validation
-            if(!pass.equals(re_password.getText().toString())) {
-                LayoutInflater inflater = getLayoutInflater();
-                View layout = inflater.inflate(R.layout.custom_toast_layout,
-                        findViewById(R.id.custom_toast_layout_root));
+            User user = new User(fullName, gender, yearOfBirth, username, pass);
 
-                AndroidToast.showToast(getApplicationContext(),pass+"password and re password should be same!"+re_password.getText().toString(),layout);
-            } else {
-                if(!fullName.isEmpty() || !gender.isEmpty() || yearOfBirth!=0 || !username.isEmpty() || !pass.isEmpty()) {
-                    user = new User(fullName, gender, yearOfBirth, username, pass);
-                    // Insert user into database
-                    result = databaseHelper.addUser(user);
-                } else {
-                    LayoutInflater inflater = getLayoutInflater();
-                    View layout = inflater.inflate(R.layout.custom_toast_layout,
-                            findViewById(R.id.custom_toast_layout_root));
-
-                    AndroidToast.showToast(getApplicationContext()," please fill all fields!",layout);
-                }
-            }
+            // Insert user into database
+            long result = databaseHelper.addUser(user);
 
             if (result != -1) {
-                // Inflate custom layout
-                LayoutInflater inflater = getLayoutInflater();
-                View layout = inflater.inflate(R.layout.custom_toast_layout,
-                        findViewById(R.id.custom_toast_layout_root));
-
-                AndroidToast.showToast(getApplicationContext(),"Registration successful",layout);
+                Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                 // Navigate to main activity or login activity
-                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
             } else {
-                // Inflate custom layout
-                LayoutInflater inflater = getLayoutInflater();
-                View layout = inflater.inflate(R.layout.custom_toast_layout,
-                        findViewById(R.id.custom_toast_layout_root));
-
-                AndroidToast.showToast(getApplicationContext(),"Registration failed",layout);
+                Toast.makeText(RegisterActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            LayoutInflater inflater = getLayoutInflater();
-            View layout = inflater.inflate(R.layout.custom_toast_layout,
-                    findViewById(R.id.custom_toast_layout_root));
-
-            AndroidToast.showToast(getApplicationContext(),e.toString(),layout);
+            Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

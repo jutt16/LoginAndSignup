@@ -12,10 +12,12 @@ import com.example.loginandsignup.helpers.AndroidToast;
 import com.example.loginandsignup.helpers.DatabaseHelper;
 import com.example.loginandsignup.helpers.User;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper databaseHelper;
-    TextView usernametextview,gender,age;
+    TextView usernametextview, gender, age;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
         user = databaseHelper.getUserByUsername(username);
 
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        int ageValue = currentYear-user.getYearOfBirth();
+
         //initializing
         usernametextview = findViewById(R.id.username_textview);
         gender = findViewById(R.id.gender_textview);
@@ -37,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         usernametextview.setText(user.getUsername());
         gender.setText(user.getGender());
-        age.setText(String.valueOf(user.getYearOfBirth()));
+        age.setText(String.valueOf(ageValue));
 
     }
     public void gotoLogin(View view) {

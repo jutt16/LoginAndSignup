@@ -45,11 +45,11 @@ public class LoginActivity extends AppCompatActivity {
                     if (isPasswordVisible) {
                         // Hide the password
                         passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                        eyeIcon = getResources().getDrawable(R.drawable.baseline_visibility_24);
+                        eyeIcon = getResources().getDrawable(R.drawable.baseline_visibility_off_24);
                     } else {
                         // Show the password
                         passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                        eyeIcon = getResources().getDrawable(R.drawable.baseline_visibility_off_24);
+                        eyeIcon = getResources().getDrawable(R.drawable.baseline_visibility_24);
                     }
                     isPasswordVisible = !isPasswordVisible;
 
